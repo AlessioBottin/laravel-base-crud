@@ -1,0 +1,17 @@
+//
+@import '~bootstrap/scss/bootstrap';
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+img {
+    max-width: 300px;
+}
+
+.card-container {
+    width: ((100% / 5) - 20px);
+    margin: 0 10px;
+}
