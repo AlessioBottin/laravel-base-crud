@@ -37,6 +37,8 @@ class ComicController extends Controller
     public function store(Request $request)
     {   
         $form_data = $request->all();
+        $request->validate($this->getValidationRules());
+
         $new_comic = new Comic();
 
         // Fill si usa solo se i campi da compilare non sono dati importanti, al massimo un hacker potrebbe generare un fumetto
@@ -81,6 +83,9 @@ class ComicController extends Controller
     public function update(Request $request, Comic $comic)
     {
         $updated_comic = $request->all();
+
+        $request->validate($this->getValidationRules());
+
         $comic->update($updated_comic);
         return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
@@ -95,5 +100,17 @@ class ComicController extends Controller
     {
         $comic->delete();
         return redirect()->route('comics.index');
+    }
+
+    public function getValidationRules() {
+        return [
+            'title' => 'required|max:50|distinct',
+            'description' => 'min:20|max:60000|nullable',
+            'thumb' => 'required|max:200',
+            'price' => 'required',
+            'series' => 'required|max:70',
+            'sale_date' => 'required|date_format:Y-m-d',
+            'type' => 'required|max:30'
+        ];
     }
 }
